@@ -1,0 +1,23 @@
+mybatis:
+  type-aliases-package: kr.co.ensmart.frameworkdemo.**.dto
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=x2commerce
+    driver-class-name: org.postgresql.Driver
+    username: x2commerce
+#    password: x2commerce123!
+    password: ENC(QFz9f4+gbzomjR2XsrLExDCl9MPUeVf9izMK8u8Z+3wPTaJaI1J5QDHubJ3xdu6W)
+
+logging:
+  level:
+    kr.co.ensmart.frameworkdemo.app.dao: debug
+    
+#jasypt:
+#  encryptor:
+#    password: jasyptpassword
