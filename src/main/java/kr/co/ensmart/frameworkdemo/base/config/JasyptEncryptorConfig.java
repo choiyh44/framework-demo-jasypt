@@ -14,9 +14,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JasyptEncryptorConfig {
-//	private static final byte[] ENCRYPT_KEY = "a30fe8cf-607d-4067-ac71-87e43ed710a8".getBytes();
-//	private static final String PASSWORD = "x2beeencpasswd";
-
 	@Value("${jasypt.encryptor.password}")
     private String encryptKey;
 
@@ -25,7 +22,7 @@ public class JasyptEncryptorConfig {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
         config.setPassword(encryptKey);
-        config.setAlgorithm("PBEWithMD5AndDES");
+        config.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
         config.setKeyObtentionIterations("1000");
         config.setPoolSize("1");
 	    config.setProviderName("SunJCE");

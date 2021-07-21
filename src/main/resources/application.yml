@@ -12,7 +12,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: x2commerce
 #    password: x2commerce123!
-    password: ENC(bzqt63mwARVBKeOb3k5TnctwTV+3CN/C9TzI+cV7tzc=)
+    password: ENC(X3H1l5Yl0eL94GAeYfD0JQ2EomuwGtk12H31WMVLcveYnJNC56+XtRVg72jk9DKw)
 
 logging:
   level:
@@ -20,5 +20,4 @@ logging:
     
 jasypt:
   encryptor:
-    bean: jasyptStringEncryptor
-    password: x2beeencpasswd
+    password: local
