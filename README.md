@@ -17,28 +17,30 @@
 ```
 @Configuration
 public class JasyptEncryptorConfig {
-	private static final byte[] ENCRYPT_KEY = "a30fe8cf-607d-4067-ac71-87e43ed710a8".getBytes();
+	@Value("${jasypt.encryptor.password}")
+    private String encryptKey;
 
-	@Bean("jasyptStringEncrptor")
-	public StringEncryptor stringEncryptor() {
-		PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
-
-		SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-		config.setPassword(new String(ENCRYPT_KEY));
-		config.setAlgorithm("PBEWithMD5AndDES");
-		config.setKeyObtentionIterations("1000");
-		config.setPoolSize("1");
-		config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
-		config.setStringOutputType("base64");
-		
-		encryptor.setConfig(config);
-		return encryptor;
-	}
+    @Bean("jasyptStringEncryptor")
+    public StringEncryptor stringEncryptor() {
+        PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
+        SimpleStringPBEConfig config = new SimpleStringPBEConfig();
+        config.setPassword(encryptKey);
+        config.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
+        config.setKeyObtentionIterations("1000");
+        config.setPoolSize("1");
+        config.setProviderName("SunJCE");
+        config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
+        config.setIvGeneratorClassName("org.jasypt.iv.RandomIvGenerator");
+        config.setStringOutputType("base64");
+        encryptor.setConfig(config);
+        return encryptor;
+    }	
+}
 ```
 
 - 암호화 대상 문자열을 암호화한다.: jasypt-1.9.3.jar 파일을 사용한다.
 ```
-java -cp jasypt-1.9.3.jar org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input="x2framework123!" password="a30fe8cf-607d-4067-ac71-87e43ed710a8" algorithm=PBEWithMD5AndDES
+java -cp jasypt-1.9.3.jar org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input="secret-encryption-needed" password="local" algorithm="PBEWITHHMACSHA512ANDAES_256" saltGeneratorClassName="org.jasypt.salt.RandomSaltGenerator" ivGeneratorClassName="org.jasypt.iv.RandomIvGenerator" stringOutputType="base64"
 ```
 
 - 암호문을 사용하여 application.yml파일을 작성한다.: ENC() 함수를 사용
