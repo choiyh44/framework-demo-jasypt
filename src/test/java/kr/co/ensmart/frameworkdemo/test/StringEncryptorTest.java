@@ -36,5 +36,8 @@ public class StringEncryptorTest {
 
 	public static void main(String[] args) {
 	    System.out.println(encrypt("x2commerce123!"));
+	    System.out.println(encrypt("X2BASE#"));
+	    System.out.println(encrypt("secret-encryption-needed"));
+	    
 	}
 }
