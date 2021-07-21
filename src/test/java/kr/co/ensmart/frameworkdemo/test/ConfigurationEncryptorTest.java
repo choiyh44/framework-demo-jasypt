@@ -2,9 +2,10 @@ package kr.co.ensmart.frameworkdemo.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import javax.annotation.Resource;
+
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +17,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @SpringBootTest
 @Slf4j
-class ConfigurationEncryptor {
-	@Autowired
+class ConfigurationEncryptorTest {
+	@Resource(name="jasyptStringEncryptor")
 	StringEncryptor configurationEncryptor;
 
 	static final String TEST_PASSWORD = "x2commerce123!";
@@ -25,9 +26,13 @@ class ConfigurationEncryptor {
 	@Test
 	public void encryptTest() {
 		String encryptedPassword = configurationEncryptor.encrypt(TEST_PASSWORD);
+//		String encryptedPassword = "8tK0jEaNLkl7ieAYJmCw8BJmIjJb/cTVloOnm7KD4ipZJDVZXMqyDD9b7JcIDYWH";
 		log.info("encrypted password is : " + encryptedPassword);
 
+		
 		String decryptedPassword = configurationEncryptor.decrypt(encryptedPassword);
+		log.info("decryptedPassword password is : " + decryptedPassword);
+		
 		assertThat(decryptedPassword).isEqualTo(TEST_PASSWORD);
 	}
 }
